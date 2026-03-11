@@ -139,7 +139,7 @@ class MainWindow(QWidget):
     def __init__(self):
         super().__init__()
         
-        self.ui_lang = "vi" # Default
+        self.ui_lang = "en" # Default to English
         self.theme = "dark" # Default
         
         # Placeholders for overlays and thread
@@ -185,7 +185,7 @@ class MainWindow(QWidget):
         self.lbl_ui_lang = QLabel("Ngôn ngữ UI:")
         layout_theme.addWidget(self.lbl_ui_lang)
         self.combo_ui_lang = QComboBox()
-        self.combo_ui_lang.addItems(["Tiếng Việt", "English"])
+        self.combo_ui_lang.addItems(["English", "Tiếng Việt"])
         self.combo_ui_lang.currentIndexChanged.connect(self.on_lang_changed)
         layout_theme.addWidget(self.combo_ui_lang)
         
@@ -220,8 +220,9 @@ class MainWindow(QWidget):
         self.lbl_target_lang = QLabel("Ngôn ngữ đích:")
         layout_lang.addWidget(self.lbl_target_lang)
         self.combo_lang = QComboBox()
-        self.combo_lang.addItems(["Vietnamese", "English", "Japanese", "Chinese", "Korean"])
+        self.combo_lang.addItems(["English", "Vietnamese", "Japanese", "Chinese", "Korean"])
         self.combo_lang.setEditable(True)
+        self.combo_lang.setToolTip("Select or type a custom language here")
         layout_lang.addWidget(self.combo_lang)
         layout_trans.addLayout(layout_lang)
 
@@ -374,7 +375,7 @@ class MainWindow(QWidget):
         self.save_settings()
         
     def on_lang_changed(self, index):
-        self.ui_lang = "vi" if index == 0 else "en"
+        self.ui_lang = "en" if index == 0 else "vi"
         self.apply_language()
         self.save_settings()
 
@@ -391,10 +392,10 @@ class MainWindow(QWidget):
     def load_settings(self):
         """Load settings from JSON file"""
         default_settings = {
-            "url": "http://localhost:1234/v1",
+            "url": "http://127.0.0.1:11434/v1",
             "model": "mistralai/ministral-3-3b",
-            "language": "Vietnamese",
-            "prompt": "Bạn là một chuyên gia dịch thuật game. Hãy dịch nội dung trong hình ảnh này sang {language}. Chỉ xuất ra câu dịch, không kèm lời giải thích nào khác.",
+            "language": "English",
+            "prompt": "You are a professional game translator. Please translate the text in this image to {language}. Output only the translation, no other explanation.",
             "opacity": 180,
             "overflow_mode": 0,
             "theme": 0,
@@ -422,7 +423,7 @@ class MainWindow(QWidget):
         self.combo_ui_lang.setCurrentIndex(default_settings.get("ui_lang", 0))
         
         self.theme = "dark" if self.combo_theme.currentIndex() == 0 else "light"
-        self.ui_lang = "vi" if self.combo_ui_lang.currentIndex() == 0 else "en"
+        self.ui_lang = "en" if self.combo_ui_lang.currentIndex() == 0 else "vi"
 
     def save_settings(self):
         """Save settings to JSON file"""

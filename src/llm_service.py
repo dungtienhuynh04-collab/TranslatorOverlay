@@ -37,7 +37,7 @@ class TranslationService(QThread):
                     
                     # Prevent capturing invalid regions
                     if w <= 0 or h <= 0:
-                        self.status_update.emit("Khung chụp quá nhỏ.")
+                        self.status_update.emit("Capture box is too small.")
                         time.sleep(1)
                         continue
                         
@@ -71,7 +71,7 @@ class TranslationService(QThread):
                     # Update previous frame
                     self.prev_frame_gray = gray.copy()
                     
-                    self.status_update.emit("Phát hiện thay đổi, đang dịch...")
+                    self.status_update.emit("Change detected, translating...")
                     
                     # 3. Convert image to base64
                     # Encode to JPEG to save bandwidth
@@ -118,30 +118,30 @@ class TranslationService(QThread):
                         if "choices" in data and len(data["choices"]) > 0:
                             result_text = data["choices"][0]["message"]["content"]
                             self.translation_result.emit(result_text)
-                            self.status_update.emit("Dịch thành công.")
+                            self.status_update.emit("Translation successful.")
                         elif "error" in data:
                             err_data = data["error"]
                             if isinstance(err_data, dict):
                                 err_msg = err_data.get("message", str(err_data))
                             else:
                                 err_msg = str(err_data)
-                            self.error_occurred.emit(f"LM Studio báo lỗi: {err_msg}")
+                            self.error_occurred.emit(f"LM Studio error: {err_msg}")
                         else:
                             resp_str = str(data)
-                            self.error_occurred.emit(f"Phản hồi không mong đợi:\n{resp_str[:100]}")
+                            self.error_occurred.emit(f"Unexpected response:\n{resp_str[:100]}")
                     else:
                         try:
                             error_msg = response.json().get("error", {}).get("message", response.text)
                         except:
                             error_msg = response.text
-                        self.error_occurred.emit(f"Lỗi API ({response.status_code}): {error_msg}")
+                        self.error_occurred.emit(f"API Error ({response.status_code}): {error_msg}")
                         
                 except requests.exceptions.RequestException as e:
-                    self.error_occurred.emit(f"Lỗi nối với LM Studio:\n{e}")
+                    self.error_occurred.emit(f"Connection error with LM Studio:\n{e}")
                     # Sleep longer on connection error
                     time.sleep(2)
                 except Exception as e:
-                    self.error_occurred.emit(f"Lỗi không xác định:\n{e}")
+                    self.error_occurred.emit(f"Unknown error:\n{e}")
                 
                 # Sleep a bit between successful loops to prevent locking the thread
                 time.sleep(1)
