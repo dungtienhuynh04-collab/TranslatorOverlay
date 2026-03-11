@@ -392,7 +392,7 @@ class MainWindow(QWidget):
         """Load settings from JSON file"""
         default_settings = {
             "url": "http://localhost:1234/v1",
-            "model": "local-model",
+            "model": "mistralai/ministral-3-3b",
             "language": "Vietnamese",
             "prompt": "Bạn là một chuyên gia dịch thuật game. Hãy dịch nội dung trong hình ảnh này sang {language}. Chỉ xuất ra câu dịch, không kèm lời giải thích nào khác.",
             "opacity": 180,
