@@ -31,6 +31,12 @@ class CaptureOverlay(QWidget):
         self.setMinimumSize(60, 60)
         self.setMouseTracking(True)
 
+    def update_language(self, title_text, instruction_text):
+        self.title_text = title_text
+        self.instruction_text = instruction_text
+        self.setWindowTitle(self.title_text)
+        self.update()
+
     def paintEvent(self, event):
         painter = QPainter(self)
         painter.setRenderHint(QPainter.RenderHint.Antialiasing)

@@ -22,6 +22,14 @@ The application utilizes a local Vision Large Language Model (VLM) running via *
 1. **Python 3.10+** (if running from source).
 2. **LM Studio**: You must install [LM Studio](https://lmstudio.ai/) and download a **Vision LLM** model. The author's recommended model is `mistralai/ministral-3-3b` (or other Vision models like `LLaVA`, `Qwen-VL`, etc.).
 
+### 💻 Hardware Requirements (GPU VRAM)
+Running Vision LLMs locally requires a dedicated graphics card. VRAM usage depends entirely on the model size and its quantization (GGUF format level):
+- **~2GB - 4GB VRAM** (Minimum): Models around ~2B to 3B parameters (e.g., `mistralai/ministral-3-3b` Q4 or `Qwen2-VL-2B-Instruct`). Ideal for GTX 1060 / 1650 / RTX 3050.
+- **~6GB - 8GB VRAM** (Recommended): Models around ~7B to 8B parameters (e.g., `LLaVA-1.5-7b` Q4 or `Qwen-VL-Chat` 7B). Ideal for cards like RTX 3060 / 4060.
+- **>12GB VRAM** (High-end): Unquantized (FP16) baseline models or larger 13B+ Vision variants.
+
+*(Note: If LM Studio uses more VRAM than you have, try downloading a smaller/more compressed `.gguf` file like `Q4_K` instead of `Q8`, and limit the Context Length in LM Studio's right panel settings!)*
+
 ## 🛠 Installation & Setup
 
 ### Method 1: Download the Pre-built Executable (Easiest)

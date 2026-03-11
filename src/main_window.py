@@ -60,7 +60,8 @@ I18N = {
         "title_capture": "Khu Vực Chụp",
         "text_capture_inst": "📷 Kéo thanh này để di chuyển - Kéo các góc vuông để Crop",
         "title_display": "Kết Quả Dịch",
-        "text_display_drag": "≡  Di chuyển  ≡"
+        "text_display_drag": "≡  Di chuyển  ≡",
+        "placeholder_custom_lang": "Gõ ngôn ngữ khác..."
     },
     "en": {
         "title": "Game Translator Overlay - Pro",
@@ -105,7 +106,8 @@ I18N = {
         "title_capture": "Capture Region",
         "text_capture_inst": "📷 Drag this bar to move - Drag square corners to Crop",
         "title_display": "Translation Result",
-        "text_display_drag": "≡  Move  ≡"
+        "text_display_drag": "≡  Move  ≡",
+        "placeholder_custom_lang": "Type custom language..."
     }
 }
 
@@ -344,21 +346,26 @@ class MainWindow(QWidget):
         # Keep toggle state text correct
         if self.capture_overlay and self.capture_overlay.isVisible():
             self.btn_show_capture.setText(t["btn_hide_capture"])
+            self.capture_overlay.update_language(t["title_capture"], t["text_capture_inst"])
         else:
             self.btn_show_capture.setText(t["btn_show_capture"])
             
         if self.display_overlay and self.display_overlay.isVisible():
             self.btn_show_display.setText(t["btn_hide_display"])
+            self.display_overlay.update_language(t["title_display"], t["text_display_drag"])
         else:
             self.btn_show_display.setText(t["btn_show_display"])
             
         self.checkbox_click_through.setText(t["check_click_through"])
         self.btn_clear_logs.setText(t["btn_clear_logs"])
         
+        self.input_custom_lang.setPlaceholderText(t.get("placeholder_custom_lang", "Type custom language..."))
+        
         if self.is_translating:
             self.btn_start.setText(t["btn_stop_trans"])
         else:
             self.btn_start.setText(t["btn_start_trans"])
+            self.lbl_status.setText(t.get("lbl_status_ready", "Status: Ready"))
             
     def _update_start_button_style(self, stop_state):
         if stop_state: # Means we should show "Stop Translating" style (RED)

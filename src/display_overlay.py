@@ -94,6 +94,12 @@ class DisplayOverlay(QWidget):
 
         self.update_text(self.current_text)
 
+    def update_language(self, title_text, drag_text):
+        self.title_text = title_text
+        self.drag_text = drag_text
+        self.setWindowTitle(self.title_text)
+        self.drag_label.setText(self.drag_text)
+
     def update_style(self):
         self.bg_frame.setStyleSheet(f"""
             QFrame {{
