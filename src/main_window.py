@@ -185,7 +185,7 @@ class MainWindow(QWidget):
         self.lbl_ui_lang = QLabel("Ngôn ngữ UI:")
         layout_theme.addWidget(self.lbl_ui_lang)
         self.combo_ui_lang = QComboBox()
-        self.combo_ui_lang.addItems(["English", "Tiếng Việt"])
+        self.combo_ui_lang.addItems(["English", "Vietnamese"])
         self.combo_ui_lang.currentIndexChanged.connect(self.on_lang_changed)
         layout_theme.addWidget(self.combo_ui_lang)
         
@@ -219,11 +219,17 @@ class MainWindow(QWidget):
         layout_lang = QHBoxLayout()
         self.lbl_target_lang = QLabel("Ngôn ngữ đích:")
         layout_lang.addWidget(self.lbl_target_lang)
+        
         self.combo_lang = QComboBox()
-        self.combo_lang.addItems(["English", "Vietnamese", "Japanese", "Chinese", "Korean"])
-        self.combo_lang.setEditable(True)
-        self.combo_lang.setToolTip("Select or type a custom language here")
+        self.combo_lang.addItems(["English", "Vietnamese", "Japanese", "Chinese", "Korean", "Custom..."])
+        self.combo_lang.currentIndexChanged.connect(self.on_target_lang_combo_changed)
         layout_lang.addWidget(self.combo_lang)
+        
+        self.input_custom_lang = QLineEdit()
+        self.input_custom_lang.setPlaceholderText("Gõ ngôn ngữ khác...")
+        self.input_custom_lang.setVisible(False)
+        layout_lang.addWidget(self.input_custom_lang)
+        
         layout_trans.addLayout(layout_lang)
 
         self.lbl_sys_prompt = QLabel("System Prompt:")
@@ -295,7 +301,7 @@ class MainWindow(QWidget):
         logs_layout.addWidget(self.btn_clear_logs)
 
         # Status Label on main layout bottom
-        self.lbl_status = QLabel("Trạng thái: Sẵn sàng")
+        self.lbl_status = QLabel("Status: Ready")
         self.lbl_status.setStyleSheet("color: #aaaaaa; font-style: italic; margin-top: 5px;")
         main_layout.addWidget(self.lbl_status)
 
@@ -374,6 +380,13 @@ class MainWindow(QWidget):
         self.apply_theme()
         self.save_settings()
         
+    def on_target_lang_combo_changed(self, index):
+        if self.combo_lang.currentText() == "Custom...":
+            self.input_custom_lang.setVisible(True)
+        else:
+            self.input_custom_lang.setVisible(False)
+            self.input_custom_lang.clear()
+
     def on_lang_changed(self, index):
         self.ui_lang = "en" if index == 0 else "vi"
         self.apply_language()
@@ -413,7 +426,16 @@ class MainWindow(QWidget):
 
         self.input_url.setText(default_settings["url"])
         self.input_model.setText(default_settings["model"])
-        self.combo_lang.setCurrentText(default_settings["language"])
+        
+        lang = default_settings.get("language", "English")
+        idx = self.combo_lang.findText(lang)
+        if idx >= 0:
+            self.combo_lang.setCurrentIndex(idx)
+        else:
+            self.combo_lang.setCurrentIndex(self.combo_lang.count() - 1) # Custom
+            self.input_custom_lang.setText(lang)
+            self.input_custom_lang.setVisible(True)
+            
         self.input_prompt.setPlainText(default_settings["prompt"])
         self.slider_opacity.setValue(default_settings.get("opacity", 180))
         self.combo_overflow.setCurrentIndex(default_settings.get("overflow_mode", 0))
@@ -430,7 +452,7 @@ class MainWindow(QWidget):
         settings = {
             "url": self.input_url.text(),
             "model": self.input_model.text(),
-            "language": self.combo_lang.currentText(),
+            "language": self.input_custom_lang.text() if self.combo_lang.currentText() == "Custom..." else self.combo_lang.currentText(),
             "prompt": self.input_prompt.toPlainText(),
             "opacity": self.slider_opacity.value(),
             "overflow_mode": self.combo_overflow.currentIndex(),
