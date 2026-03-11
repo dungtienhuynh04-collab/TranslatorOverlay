@@ -1,6 +1,6 @@
-# Game Translator Overlay - Pro
+# TranslatorOverlay
 
-**Game Translator Overlay - Pro** is a powerful desktop application that provides real-time, on-screen text translation (especially useful for gaming). 
+**TranslatorOverlay** is a powerful desktop application that provides real-time, on-screen text translation (especially useful for gaming).  
 
 The application utilizes a local Vision Large Language Model (VLM) running via **LM Studio** to scan the screen, recognize text, and translate it into your desired language entirely automatically and safely on your local machine.
 
@@ -20,7 +20,7 @@ The application utilizes a local Vision Large Language Model (VLM) running via *
 ## 🚀 System Requirements
 
 1. **Python 3.10+** (if running from source).
-2. **LM Studio**: You must install [LM Studio](https://lmstudio.ai/) and download a **Vision LLM** model (e.g., `LLaVA`, `Qwen-VL`, etc.).
+2. **LM Studio**: You must install [LM Studio](https://lmstudio.ai/) and download a **Vision LLM** model. The author's recommended model is `mistralai/ministral-3-3b` (or other Vision models like `LLaVA`, `Qwen-VL`, etc.).
 
 ## 🛠 Installation & Setup
 
@@ -28,8 +28,8 @@ The application utilizes a local Vision Large Language Model (VLM) running via *
 
 1. Clone this Repository to your machine:
    ```bash
-   git clone https://github.com/your-username/GameTranslatorOverlay.git
-   cd GameTranslatorOverlay
+   git clone https://github.com/your-username/TranslatorOverlay.git
+   cd TranslatorOverlay
    ```
 2. Create and activate a Virtual Environment:
    ```bash
@@ -49,9 +49,9 @@ The application utilizes a local Vision Large Language Model (VLM) running via *
 ### Method 2: Build a Standalone Executable (.exe)
 If you want to package the app into a single executable so you can run it without Python installed, use PyInstaller:
 ```bash
-pyinstaller --noconfirm --onedir --windowed --add-data "src;src" --name "GameTranslatorOverlay" main.py
+pyinstaller --noconfirm --onedir --windowed --add-data "src;src" --name "TranslatorOverlay" main.py
 ```
-*The executable will be located in the `dist/GameTranslatorOverlay/GameTranslatorOverlay.exe` folder.*
+*The executable will be located in the `dist/TranslatorOverlay/TranslatorOverlay.exe` folder.*
 
 ## ⚙️ How to use with LM Studio
 
@@ -59,7 +59,7 @@ pyinstaller --noconfirm --onedir --windowed --add-data "src;src" --name "GameTra
 2. Navigate to the **Local Server (↔️)** tab on the left sidebar.
 3. Select the Vision model you just downloaded at the top, and adjust the RAM/VRAM settings according to your PC specs.
 4. Click **Start Server**. Note the running port (usually `http://localhost:1234/v1`).
-5. **Open Game Translator Overlay**:
+5. **Open TranslatorOverlay**:
    - In the **Settings** tab, set the **API URL** to match the LM Studio server. (The app will automatically append `/v1` if you forget).
    - Click `Capture Box` and drag it over the chat/dialogue area in your game.
    - Click `Display Box` and drag it to a convenient spot to read translations.
@@ -68,7 +68,7 @@ pyinstaller --noconfirm --onedir --windowed --add-data "src;src" --name "GameTra
 ## File Structure
 
 ```
-📦GameTranslatorOverlay
+📦TranslatorOverlay
  ┣ 📂src
  ┃ ┣ 📜capture_overlay.py  # Transparent screen capture UI logic.
  ┃ ┣ 📜display_overlay.py  # Always-on-top translation result UI logic.
