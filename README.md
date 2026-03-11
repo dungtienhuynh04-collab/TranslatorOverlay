@@ -22,11 +22,15 @@ The application utilizes a local Vision Large Language Model (VLM) running via *
 1. **Python 3.10+** (if running from source).
 2. **LM Studio**: You must install [LM Studio](https://lmstudio.ai/) and download a **Vision LLM** model. The author's recommended model is `mistralai/ministral-3-3b` (or other Vision models like `LLaVA`, `Qwen-VL`, etc.).
 
-### 💻 Hardware Requirements (GPU VRAM)
-Running Vision LLMs locally requires a dedicated graphics card. VRAM usage depends entirely on the model size and its quantization (GGUF format level):
-- **~2GB - 4GB VRAM** (Minimum): Models around ~2B to 3B parameters (e.g., `mistralai/ministral-3-3b` Q4 or `Qwen2-VL-2B-Instruct`). Ideal for GTX 1060 / 1650 / RTX 3050.
-- **~6GB - 8GB VRAM** (Recommended): Models around ~7B to 8B parameters (e.g., `LLaVA-1.5-7b` Q4 or `Qwen-VL-Chat` 7B). Ideal for cards like RTX 3060 / 4060.
-- **>12GB VRAM** (High-end): Unquantized (FP16) baseline models or larger 13B+ Vision variants.
+### 💻 Hardware Requirements (GPU / CPU)
+Local Vision LLMs work best on a dedicated GPU (VRAM), but can also run on standard System RAM (CPU) through LM Studio's offloading feature:
+
+- **CPU / System RAM Only**: If you don't have a dedicated GPU, you can run small models (e.g., `ministral-3-3b` or `Qwen-VL-2B`) using your CPU. Results will be slower (takes a few seconds per translation), but it is fully functional. **16GB+ RAM** is recommended for a smooth experience.
+- **~2GB - 4GB VRAM** (Entry GPU): Models around ~2B to 3B parameters (e.g., `mistralai/ministral-3-3b` Q4 or `Qwen2-VL-2B-Instruct`). Ideal for GTX 1060 / 1650 / RTX 3050.
+- **~6GB - 8GB VRAM** (Recommended GPU): Models around ~7B to 8B parameters (e.g., `LLaVA-1.5-7b` Q4 or `Qwen-VL-Chat` 7B). Ideal for cards like RTX 3060 / 4060.
+- **>12GB VRAM** (High-end): Unquantized baseline models or larger 13B+ Vision variants.
+
+*(Note: If LM Studio uses more VRAM than you have, try downloading a smaller/more compressed `.gguf` file like `Q4_K` instead of `Q8`, and limit the Context Length in LM Studio's right panel settings!)*
 
 *(Note: If LM Studio uses more VRAM than you have, try downloading a smaller/more compressed `.gguf` file like `Q4_K` instead of `Q8`, and limit the Context Length in LM Studio's right panel settings!)*
 
@@ -34,7 +38,7 @@ Running Vision LLMs locally requires a dedicated graphics card. VRAM usage depen
 
 ### Method 1: Download the Pre-built Executable (Easiest)
 For regular users who just want to use the app without touching code or terminals:
-1. Go to the **[Releases](https://github.com/your-username/TranslatorOverlay/releases)** page of this repository (replace URL with your actual repo).
+1. Go to the **[Releases](https://github.com/dungtienhuynh04-collab/TranslatorOverlay/releases)** page of this repository.
 2. Download the latest `TranslatorOverlay.zip` file.
 3. Extract the ZIP file to any folder on your computer.
 4. Double-click **`TranslatorOverlay.exe`** to run the app!
@@ -43,7 +47,7 @@ For regular users who just want to use the app without touching code or terminal
 
 1. Clone this Repository to your machine:
    ```bash
-   git clone https://github.com/your-username/TranslatorOverlay.git
+   git clone https://github.com/dungtienhuynh04-collab/TranslatorOverlay.git
    cd TranslatorOverlay
    ```
 2. Create and activate a Virtual Environment:
