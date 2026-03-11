@@ -24,7 +24,14 @@ The application utilizes a local Vision Large Language Model (VLM) running via *
 
 ## 🛠 Installation & Setup
 
-### Method 1: Run from Source Code
+### Method 1: Download the Pre-built Executable (Easiest)
+For regular users who just want to use the app without touching code or terminals:
+1. Go to the **[Releases](https://github.com/your-username/TranslatorOverlay/releases)** page of this repository (replace URL with your actual repo).
+2. Download the latest `TranslatorOverlay.zip` file.
+3. Extract the ZIP file to any folder on your computer.
+4. Double-click **`TranslatorOverlay.exe`** to run the app!
+
+### Method 2: Run from Source Code (For Developers)
 
 1. Clone this Repository to your machine:
    ```bash
@@ -45,13 +52,7 @@ The application utilizes a local Vision Large Language Model (VLM) running via *
    ```bash
    python main.py
    ```
-
-### Method 2: Build a Standalone Executable (.exe)
-If you want to package the app into a single executable so you can run it without Python installed, use PyInstaller:
-```bash
-pyinstaller --noconfirm --onedir --windowed --add-data "src;src" --name "TranslatorOverlay" main.py
-```
-*The executable will be located in the `dist/TranslatorOverlay/TranslatorOverlay.exe` folder.*
+   *(To build the executable yourself, run `pyinstaller --noconfirm --onedir --windowed --add-data "src;src" --name "TranslatorOverlay" main.py`)*
 
 ## ⚙️ How to use with LM Studio
 
